@@ -1,0 +1,7 @@
+set VERSION=1.0.0
+set CONTAINER_HOST=docker.io
+set CONTAINER_USER=lealarcon
+set CONTAINER_NAME=rule-of-thumb-back
+
+docker build -t %CONTAINER_HOST%/%CONTAINER_USER%/%CONTAINER_NAME%:%VERSION% .
+docker push  %CONTAINER_HOST%/%CONTAINER_USER%/%CONTAINER_NAME%:%VERSION%

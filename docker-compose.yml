@@ -1,0 +1,8 @@
+version: '3'
+services:
+  rule-of-thumb-back:
+    container_name: rule-of-thumb-back
+    image: 'lealarcon/rule-of-thumb-back:1.0.0'
+    restart: always
+    ports:
+      - "5000:5000"
