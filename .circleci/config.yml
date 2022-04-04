@@ -1,0 +1,34 @@
+aliases:
+ - &filter-only-master
+   branches:
+     only:
+       - master
+
+version: 2
+jobs:
+  deploy-website:
+    docker:
+      # specify the version you desire here
+      - image: circleci/node:10
+
+    steps:
+      - checkout
+      - run:
+          name: Deploying to GitHub Pages
+          command: |
+            git config --global user.email "lealarcon@users.noreply.github.com"
+            git config --global user.name "lealarcon"
+            echo "machine github.com login lealarcon password $GITHUB_TOKEN" > ~/.netrc
+            yarn install && GIT_USER=lealarcon &&  yarn run build --base-href /rule-of-thumb-front/
+            cd build
+            git init
+            git add .
+            git commit -m $CIRCLE_BUILD_NUM
+            git remote add origin git@github.com:lealarcon/rule-of-thumb-front.github.io.git
+            git push --force origin master:gh-pages
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - deploy-website:
+         filters: *filter-only-master
